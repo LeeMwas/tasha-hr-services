@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaWhatsapp, 
   FaEnvelope, 
@@ -7,8 +7,10 @@ import {
   FaPaperPlane,
   FaUser,
   FaAt,
-  FaComment
+  FaComment,
+  FaCheckCircle
 } from 'react-icons/fa';
+import emailjs from 'emailjs-com';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -16,6 +18,8 @@ function Contact() {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMessageSent, setIsMessageSent] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,14 +31,41 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add form submission logic
-    console.log(formData);
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+
+    emailjs.send(
+      "service_jbw9q5w", 
+      "template_7sks9vr", 
+      {
+        from_name: formData.name,
+        to_name: "Tasha",
+        message: formData.message,
+        reply_to: formData.email,
+      },
+      "fj3taMZSNxkCDQCdr"
+    )
+    .then(
+      (response) => {
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setIsMessageSent(true);
+          
+          setTimeout(() => {
+            setIsMessageSent(false);
+            setFormData({
+              name: '',
+              email: '',
+              message: ''
+            });
+          }, 3000);
+        }, 1500);
+      },
+      (error) => {
+        console.error('Failed to send email:', error);
+        setIsSubmitting(false);
+        alert('Failed to send message. Please try again.');
+      }
+    );
   };
 
   const contactMethods = [
@@ -125,15 +156,65 @@ function Contact() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white rounded-xl shadow-md p-8"
+            className="bg-white rounded-xl shadow-md p-8 relative"
           >
+            {/* Sending Animation Overlay */}
+            <AnimatePresence>
+              {isSubmitting && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-white/90 z-10 flex items-center justify-center"
+                >
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 10, -10, 0]
+                    }}
+                    transition={{ 
+                      duration: 0.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <FaPaperPlane className="text-4xl text-sky-500 animate-pulse" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Message Sent Animation Overlay */}
+            <AnimatePresence>
+              {isMessageSent && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  className="absolute inset-0 bg-white/90 z-10 flex items-center justify-center"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="text-center"
+                  >
+                    <FaCheckCircle className="text-6xl text-green-500 mx-auto mb-4 animate-bounce" />
+                    <h3 className="text-2xl font-bold text-green-600">
+                      Message Sent Successfully!
+                    </h3>
+                    <p className="text-green-500">Thank you for your message.</p>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <h2 className="text-2xl font-semibold text-sky-800 mb-6">
               Send a Message
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            </h2> <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name Input */}
               <div className="relative">
-                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500" />
+                <FaUser  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500" />
                 <input 
                   type="text"
                   name="name"
@@ -178,10 +259,12 @@ function Contact() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="w-full bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition flex items-center justify-center space-x-2"
+                disabled={isSubmitting}
+                className={`w-full bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition flex items-center justify-center space-x-2 
+                  ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <FaPaperPlane />
-                <span>Send Message</span>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
               </motion.button>
             </form>
           </motion.div>

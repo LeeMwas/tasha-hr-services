@@ -53,11 +53,12 @@ function HomePage() {
           {/* CTA Buttons */}
           <div className="flex space-x-4 pt-6">
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-sky-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-sky-600 transition"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-sky-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-sky-600 transition"
+                onClick={() => window.open('https://drive.google.com/file/d/1VH6ywNS4tiklN2CjsMEFWIE29-YABMn0/view?usp=sharing', '_blank')}
             >
-              Download CV
+            Download CV
             </motion.button>
             <Link to="/contact">
               <motion.button
