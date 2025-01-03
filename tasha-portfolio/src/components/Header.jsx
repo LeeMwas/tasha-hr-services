@@ -92,15 +92,20 @@ function Header() {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo Section */}
         <Link to="/" className="flex items-center space-x-3">
-          <motion.div
-            whileHover={{ scale: 1.05, rotate: 3 }}
-            className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg"
-          >
-            <FaUser className="text-sky-600 text-xl" />
-          </motion.div>
-          <span className="text-white font-bold text-xl tracking-wider">
-            Tasha Manoti
-          </span>
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 3 }}
+              className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden" // Added overflow-hidden to contain the image
+            >
+              {/* Replace <FaUser /> with your image */}
+              <img
+                src="/images/tashablue logo.jpeg" // Your image path
+                alt="Tasha Manoti Profile"
+                className="w-full h-full object-cover object-center" // Ensure the image covers the circular container
+              />
+            </motion.div>
+            <span className="text-white font-bold text-xl tracking-wider">
+              Natasha Manoti
+            </span>
         </Link>
 
         {/* Desktop Navigation */}

@@ -34,12 +34,12 @@ function Footer() {
     },
     { 
       Icon: FaFacebook, 
-      href: "https://facebook.com/jobsupdatebytasha",
+      href: "https://www.facebook.com/profile.php?id=100063946424514&mibextid=ZbWKwL",
       color: "text-blue-600"
     },
     { 
       Icon: FaLinkedin, 
-      href: "https://linkedin.com/in/tashamanoti",
+      href: "https://www.linkedin.com/in/natasha-manoti-219287243/",
       color: "text-sky-600"
     }
   ];

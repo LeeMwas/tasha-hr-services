@@ -15,7 +15,7 @@ function HomePage() {
         {/* Left Side Content */}
         <div className="w-1/2 space-y-6">
           <h1 className="text-5xl font-bold text-sky-600">
-            Tasha Manoti
+          Natasha Manoti
           </h1>
           <h2 className="text-3xl font-semibold text-sky-500">
             Human Resources Professional
@@ -28,7 +28,7 @@ function HomePage() {
           {/* Social Links */}
           <div className="flex space-x-4 pt-4">
             <motion.a 
-              href="https://linkedin.com/in/tashamanoti"
+              href="https://www.linkedin.com/in/natasha-manoti-219287243/"
               whileHover={{ scale: 1.1 }}
               className="text-sky-600 hover:text-sky-800"
             >
@@ -86,7 +86,7 @@ function HomePage() {
 >
   <div className="w-96 h-96 bg-sky-100 rounded-full overflow-hidden shadow-2xl">
         <img 
-        src="/images/tasha.jpg" 
+        src="/images/tashablue logo.jpeg" 
         alt="Tasha Manoti Profile"
         className="w-full h-full object-cover object-center"
         />

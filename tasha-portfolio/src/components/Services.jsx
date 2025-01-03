@@ -174,7 +174,7 @@ function Services() {
               { 
                 Icon: FaFacebook, 
                 color: "text-blue-600 hover:text-blue-700",
-                link: "https://facebook.com/jobsupdatebytasha"
+                link: "https://www.facebook.com/profile.php?id=100063946424514&mibextid=ZbWKwL"
               }
             ].map(({ Icon, color, link }, index) => (
               <motion.a
